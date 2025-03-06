@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mes Données{% endblock %}
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Mes Formations</h1>
+
+        <div class="row">
+            {% for entry in formations %}
+                {% set formation = entry.formation %}
+                {% set etat = entry.etat %}
+                {% set id = entry.id %}
+                {% set dateNow = "now"|date('Y-m-d') %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body ">
+                        <h5 class="card-title">{{ formation.titre }}</h5>
+                        <p class="card-text">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Date Début :</strong> {{ formation.dateFormation ? formation.dateFormation|date('Y-m-d') : 'Non définie' }}</li>
+                            <li class="list-group-item"><strong>Date Fin :</strong> {{ formation.dateFormationFin ? formation.dateFormationFin|date('Y-m-d') : 'Non définie' }}</li>
+                            <li class="list-group-item"><strong>Durée :</strong> {{ formation.duree }} heures</li>
+                            <li class="list-group-item"><strong>Certification :</strong> {{ formation.certification }}</li>
+                            <li class="list-group-item">
+                                <form action="{{ path('update_etat') }}" method="post" class="form-inline">
+                                    <strong>État :</strong>
+                                    <select name="etat" onchange="this.form.submit()" class="form-select"
+                                            aria-label="Default select example"
+                                            {{ formation.dateFormationFin and formation.dateFormationFin|date('Y-m-d') < dateNow ? 'disabled' }}>
+                                        <option value="actif" {{ etat == 'actif' ? 'selected' : '' }}>Actif</option>
+                                        <option value="non actif" {{ etat == 'non actif' ? 'selected' : '' }}>Non Actif</option>
+                                    </select>
+                                    <input type="hidden" name="type" value="formation">
+                                    <input type="hidden" name="id" value="{{ id }}">
+                                </form>
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h1 class="text-center mb-4 mt-5">Mes Evénements</h1>
+        <div class="row">
+            {% for entry in events %}
+                {% set event = entry.event %}
+                {% set etat = entry.etat %}
+                {% set id = entry.id %}
+                {% set dateNow = "now"|date('Y-m-d') %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.nameEvent }}</h5>
+                        <p class="card-text">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Date Début :</strong> {{ event.dateEvent ? event.dateEvent|date('Y-m-d') : 'Non définie' }}</li>
+                            <li class="list-group-item"><strong>Date Fin :</strong> {{ event.dateEventF ? event.dateEventF|date('Y-m-d') : 'Non définie' }}</li>
+                            <li class="list-group-item"><strong>Localisation :</strong> {{ event.location }}</li>
+                            <li class="list-group-item">
+                                <form action="{{ path('update_etat') }}" method="post" class="form-inline">
+                                    <strong>État :</strong>
+                                    <select name="etat" onchange="this.form.submit()" class="form-select"
+                                            aria-label="Default select example"
+                                            {{ event.dateEventF and event.dateEventF|date('Y-m-d') < dateNow ? 'disabled' }}>
+                                        <option value="actif" {{ etat == 'actif' ? 'selected' : '' }}>Actif</option>
+                                        <option value="non actif" {{ etat == 'non actif' ? 'selected' : '' }}>Non Actif</option>
+                                    </select>
+                                    <input type="hidden" name="type" value="event">
+                                    <input type="hidden" name="id" value="{{ id }}">
+                                </form>
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        .list-group-item .form-inline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .list-group-item .form-inline strong {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+
+        .list-group-item select {
+            flex-grow: 1;
+            max-width: 150px;
+        }
+
+        .form-select{
+            height: 35px;
+            width: 55%;
+        }
+        .row {
+            padding-top: 40px;
+            gap: 30px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .list-group-item {
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        select {
+            margin-left: 10px;
+        }
+
+        select option {
+            font-size: 1rem;
+        }
+    </style>
+
+{% endblock %}

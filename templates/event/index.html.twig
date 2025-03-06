@@ -1,0 +1,44 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+    <h1 class="titre-pages">Liste Des Evenements</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom Evenement</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Adresse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in listeE %}
+            <tr>
+                <td>{{ event.nameEvent }}</td>
+                <td>{{ event.dateEvent ? event.dateEvent|date('Y-m-d') : '' }}</td>
+                <td>{{ event.dateEventF ? event.dateEventF|date('Y-m-d') : '' }}</td>
+                <td>{{ event.location }}</td>
+                <td class="action-buttons">
+                    <a href="{{ path('app_event_show', {'id': event.id}) }}">Afficher</a>
+                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>
+                    <a href="{{ path('app_event_list-parti', {'id': event.id}) }}">Les Participants</a>
+                    <a href="{{ path('app_event_flyer', {id: event.id}) }}"><i class="fa-solid fa-download"></i>  Flyer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun événement trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="action-buttons">
+    <a href="{{ path('app_event_new') }}" style="margin-top: 100px; margin-left: 190px">Ajouter Un Nouvel Evenement</a>
+</div>
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

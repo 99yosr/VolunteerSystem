@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_row(form.nameEvent, { 'label': "Nom de l'événement" }) }}
+    {{ form_row(form.dateEvent, { 'label': 'Date début' }) }}
+    {{ form_row(form.dateEventF, { 'label': 'Date fin' }) }}
+    {{ form_row(form.location, { 'label': 'Adresse' }) }}
+    {{ form_row(form.description, { 'label': 'Description' }) }}
+    {{ form_row(form.image, { 'label': 'Télécharger une image' }) }}
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

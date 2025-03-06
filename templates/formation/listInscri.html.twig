@@ -1,0 +1,44 @@
+{% extends 'user/dashboard.html.twig' %}
+{% block title %}Les Inscrits{% endblock %}
+{% block body %}
+    <style>
+        .titre-event {
+
+            margin-left: 200px !important; /* Pour déplacer le titre vers le bas */
+            font-size: 1.5rem;
+            color: #272D5B; /* Bleu foncé */
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        </style>
+    <h2 class="titre-event">La liste des Inscrits </h2>
+    <table border="2" class="table parti">
+        <tr>
+            <td>Prénom</td>
+            <td>Nom </td>
+            <td>Email</td>
+            <td>N° Téléphone</td>
+
+        </tr>
+        {% for v in listeVI %}
+            <tr>
+                <td>{{ v.name }}</td>
+                <td>{{ v.lastName}}</td>
+                <td>{{ v.email }}</td>
+                <td>{{ v.numTel }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

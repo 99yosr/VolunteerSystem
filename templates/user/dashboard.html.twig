@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard - Unity Impact{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/volontaire.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+
+
+{% block stylesheets %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 260px;
+            right: 0;
+            height: 60px;
+            /*background-color: #e4e8ff;*/
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+            /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+            z-index: 10;
+            font-size: 1.2rem;
+        }
+
+        .profile-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-icon {
+            cursor: pointer;
+            border-radius: 50%;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .blue-icon {
+            color: #272D5B;
+            font-size: 24px; /* Taille de l'icône */
+        }
+
+        .profile-dropdown {
+            display: none; /* Masqué par défaut */
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre plus douce */
+            border-radius: 8px; /* Coins arrondis pour un aspect plus moderne */
+            overflow: hidden;
+            z-index: 100;
+            width: 220px; /* Elargir le menu */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(-10px);
+
+        }
+
+
+        .profile-dropdown .association-name {
+            padding: 16px 20px;
+            background-color: #272D5B;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px; /* Coins arrondis en haut */
+        }
+        .profile-dropdown.active {
+            display: block; /* Visible uniquement lorsque "active" est présent */
+            opacity: 1;
+            transform: translateY(0); /* En place */
+        }
+        .profile-menu .profile-icon {
+            cursor: pointer;
+        }
+
+
+
+        .profile-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+            border-bottom: 1px solid #ddd; /* Légère séparation entre les liens */
+        }
+
+        /*.profile-dropdown a:last-child {
+            border-bottom: none; /* Pas de bordure pour le dernier lien */
+        /*}*/
+
+        .profile-dropdown a:hover {
+            background-color: #f1f1f1;
+            padding-left: 30px; /* Effet d'agrandissement lors du survol */
+            display: block;
+        }
+
+        /*.profile-menu:hover .profile-dropdown {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-dropdown a i {
+            margin-right: 10px;
+            font-size: 1.2rem; /* Taille de l'icône plus grande */
+        /*}*/
+
+
+        /* Styles pour la sidebar */
+        /* Style général de la sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background-color: #272D5B;
+            color: #e4e8ff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            color: #e4e8ff;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .sidebar .aS {
+            color: #e4e8ff;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .aS:hover {
+            background-color: #3559b7;
+        }
+
+        /* Style pour le dropdown */
+        .sidebar .dropdown {
+            width: 100%;
+        }
+
+        /* Le bouton du dropdown */
+        .sidebar .dropdown-btn {
+            padding: 12px 20px;
+            background-color: transparent;
+            color: #e4e8ff;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            display: block;
+        }
+
+        .sidebar .dropdown-btn:hover {
+            background-color: #3559b7;
+        }
+
+        /* Contenu du dropdown avec un effet de transition */
+        .sidebar .dropdown-content {
+            display: none; /* Par défaut, le dropdown est caché */
+            flex-direction: column;
+            padding-left: 20px;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        /* Affichage au survol ou lors du clic */
+        .sidebar .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Quand le dropdown est ouvert, il s'affiche */
+        .sidebar .dropdown.open .dropdown-content {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Style des éléments du dropdown */
+        .sidebar .dropdown-content .aS {
+            padding: 8px 0;
+            font-size: 1rem;
+            color: #fff;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+
+        /* Changer la couleur de fond des éléments du dropdown */
+        .sidebar .dropdown-content .aS:hover {
+            background-color: #4a6eb3;
+        }
+
+        /* Changer la couleur du dropdown actif */
+        .sidebar .dropdown.open .dropdown-btn {
+            background-color: #272D5B;
+            color: #fff;
+        }
+
+        /* Décalage de la section "Formations" lorsque "Événements" est ouvert */
+        .sidebar .dropdown.open + .dropdown + .aS {
+            margin-top: 20px; /* Décale "Formations" vers le bas */
+        }
+
+
+
+        .dashboard-container {
+            margin-left: 400px;
+            margin-top: 40px;
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-container h2 {
+            margin-bottom: 50px;
+            font-size: 1.9rem;
+            color: #272D5B; /* Titre avec la couleur bleu foncé */
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .titre-chart {
+            margin-bottom: 50px;
+            font-size: 1.5rem;
+            color: #272D5B; /* Titre avec la couleur bleu foncé */
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            margin: 10px 0;
+            color:#272D5B; /* Couleur de texte pour le titre de la carte */
+        }
+        .card i {
+            font-size: 3rem; /* Taille de l'icône */
+            margin-bottom: 10px;
+            color: #4E9AEE;
+        }
+        .card p{
+            color: #272D5B;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        #calendar {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        /*.dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }*/
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-bottom: 100px;
+        }
+        .chart {
+            width: 45%;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        .logo{
+            width: 100%;
+            margin-left: 0px;
+        }
+        </style>
+        {% endblock %}
+
+
+
+    <div class="header">
+
+        <div class="profile-menu">
+            <i class="fas fa-user blue-icon"></i>
+            <div class="profile-dropdown">
+                <div class="association-name">
+                    <p><strong>{{ name }}</strong></p>
+                </div>
+                <a href="{{ path('app_user_profile') }}" class="profile-link">
+                    <i class="fas fa-id-badge"></i> Mon Profil
+                </a>
+                <a href="{{ path('app_logout') }}" class="logout-link">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="sidebar">
+
+        <a href="{{ path('app_admin') }}"><img src="{{ asset('img/logo_2.png') }}" alt="Volunteer System Logo" class="logo"></a>
+        <a class="aS" href="{{ path('app_admin') }}">Tableau de Bord</a>
+
+        <div class="menu-item dropdown">
+            <a href="#" class="dropdown-btn aS">Événements</a>
+            <div class="dropdown-content">
+                <a class="aS" href="{{ path('app_event_new') }}">Ajouter un Événement</a><br/><br/>
+                <a class="aS" href="{{ path('app_event_list') }}">Voir les Événements</a>
+            </div>
+        </div>
+
+        <div class="menu-item dropdown">
+            <a href="#" class="dropdown-btn aS">Formations</a>
+            <div class="dropdown-content">
+                <a class="aS" href="{{ path('app_formation_new') }}">Ajouter une Formation</a><br/><br/>
+                <a class="aS" href="{{ path('app_formation_list') }}">Voir les Formations</a>
+            </div>
+        </div>
+
+    </div>
+{% block body %}
+    <div class="dashboard-container">
+
+        <h2>Bienvenue sur votre tableau de bord associatif ! </h2>
+
+        <div class="stats-grid">
+            <div class="card">
+                <i class="fas fa-calendar-day"></i> <!-- Icône pour les événements -->
+                <h2>{{ eventCount }}</h2>
+                <p>Événements Organisés</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-chalkboard-teacher"></i> <!-- Icône pour les formations -->
+                <h2>{{ formationCount }}</h2>
+                <p>Formations Disponibles</p>
+            </div>
+        </div>
+
+
+
+        <h3 class="titre-chart">Vue d'ensemble des activités de l'association</h3>
+
+        <div class="charts-container">
+            <!-- Chart for Events -->
+            <div class="chart">
+                <h3>Participation aux Événements</h3>
+                <canvas id="eventChart"></canvas>
+            </div>
+
+            <!-- Chart for Formations -->
+            <div class="chart">
+                <h3>Inscriptions aux Formations</h3>
+                <canvas id="formationChart"></canvas>
+            </div>
+
+        </div>
+        <h3 class="titre-chart">Votre Calendrier des Prochains Événements et Formations</h3>
+        <div id="calendar"></div>
+
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <script>
+        //import * as FullCalendar from "@fullcalendar/core";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let calendarEl = document.getElementById('calendar');
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                events: [
+                    {% for event in formattedEvents %}
+                    {
+                        id: '{{ event.id }}',
+                        title: '{{ event.title }}',
+                        start: '{{ event.start }}',
+                        location: '{{ event.location }}',
+                        color: '{{ event.color }}'
+                    },
+                    {% endfor %}
+                    {% for formation in formattedFormations %}
+                    {
+                        id: '{{ formation.id }}',
+                        title: '{{ formation.title }}',
+                        start: '{{ formation.start }}',
+                        duration: '{{ formation.duration }}',
+                        color: '{{ formation.color }}'
+                    },
+                    {% endfor %}
+                ]
+            });
+            calendar.render();
+        });
+
+
+    </script>
+{% endblock %}
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            const dropdownButtons = document.querySelectorAll('.sidebar .dropdown .dropdown-btn');
+
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const dropdown = this.closest('.dropdown');
+                    dropdown.classList.toggle('open'); // Basculer la classe 'open' pour afficher/masquer le contenu
+                });
+            });
+
+            // Lorsque la souris quitte un élément dropdown, fermer la liste
+            const dropdowns = document.querySelectorAll('.sidebar .dropdown');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('mouseleave', function () {
+                    this.classList.remove('open'); // Fermer la liste lorsque la souris quitte le dropdown
+                });
+            });
+        });
+
+    </script>
+    <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+            const profileMenu = document.querySelector('.profile-menu');
+            const profileDropdown = document.querySelector('.profile-dropdown');
+            let timeout; // Variable pour gérer le délai de fermeture
+
+            // Afficher le menu lorsqu'on survole le menu principal
+            profileMenu.addEventListener('mouseenter', function () {
+            clearTimeout(timeout); // Annule tout délai de fermeture en cours
+            profileDropdown.classList.add('active'); // Affiche le menu
+        });
+
+            // Garder le menu ouvert lorsque la souris est sur le dropdown
+            profileDropdown.addEventListener('mouseenter', function () {
+            clearTimeout(timeout); // Annule tout délai
+        });
+
+            // Ajouter un délai pour masquer le menu quand on quitte le menu principal
+            profileMenu.addEventListener('mouseleave', function () {
+            timeout = setTimeout(() => {
+            profileDropdown.classList.remove('active'); // Cache le menu après un délai
+        }, 300); // Délai de 300 ms
+        });
+
+            // Ajouter un délai pour masquer le menu quand on quitte le dropdown
+            profileDropdown.addEventListener('mouseleave', function () {
+            timeout = setTimeout(() => {
+            profileDropdown.classList.remove('active');
+        }, 300); // Délai de 300 ms
+        });
+
+            // Empêcher les clics à l'intérieur du dropdown de fermer le menu
+            profileDropdown.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+        });
+    </script>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+{% block script2 %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data for Event Participation Chart
+        const eventLabels = {{ eventParticipationStats|map(e => e.eventName)|json_encode|raw }};
+        const eventData = {{ eventParticipationStats|map(e => e.participantCount)|json_encode|raw }};
+
+        // Data for Formation Enrollment Chart
+        const formationLabels = {{ formationEnrollmentStats|map(f => f.formationName)|json_encode|raw }};
+        const formationData = {{ formationEnrollmentStats|map(f => f.enrollmentCount)|json_encode|raw }};
+
+        // Event Chart
+        const eventChartCtx = document.getElementById('eventChart').getContext('2d');
+        new Chart(eventChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: eventLabels,
+                datasets: [{
+                    data: eventData,
+                    backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0', '#9966ff'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition des participants par événement'
+                    }
+                }
+            }
+        });
+
+        // Formation Chart
+        const formationChartCtx = document.getElementById('formationChart').getContext('2d');
+        new Chart(formationChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: formationLabels,
+                datasets: [{
+                    data: formationData,
+                    backgroundColor: [
+                        '#272D5B', '#4E9AEE', '#3c4b63', '#1A4F8B', '#74C1FF',
+                        '#A9DFFF', '#3E65A0', '#5C7BAF', '#87B9FF', '#D9F2FF'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition des inscriptions par formation'
+                    }
+                }
+            }
+        });
+
+    </script>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

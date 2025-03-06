@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Volontaire{% endblock %}
+
+{% block body %}
+    <h1>Modifier Volontaire</h1>
+    <div id="form-container">
+        {{ form_start(form) }}
+
+        <!-- Common Fields -->
+        <div id="common_fields">
+            {{ form_row(form.email, { attr: { class: 'common-input' } }) }}
+            {{ form_row(form.plainPassword, { label: 'Mot De Passe', attr: { class: 'common-input' } }) }}
+            {{ form_row(form.name, {label: 'Prénom', attr: { class: 'common-input' } }) }}
+            {{ form_row(form.lastName, {label: 'Nom', attr: { class: 'common-input' } }) }}
+        </div>
+
+        <!-- Volontaire Fields -->
+        <div id="volontaire_fields">
+            <h3>Détails Volontaire</h3>
+            {{ form_row(form.skills) }}
+            {{ form_row(form.availability, { label: 'Disponibilité' }) }}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+            <button type="submit" class="btn btn-outline-primary btn-sm">Modifier</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

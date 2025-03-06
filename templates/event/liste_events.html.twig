@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+{% block title %}Evenements{% endblock %}
+{% block body %}
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Événements Disponibles</h1>
+
+        <form method="GET" action="{{ path('app_event_index') }}" class="mb-4" id="searchForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="search_name" class="form-control" placeholder="Nom de l'événement" id="search_name" value="{{ app.request.get('search_name') }}">
+                </div>
+            </div>
+        </form>
+
+        <div class="row g-4">
+            {% for v in events %}
+                <div class="col-md-4">
+                    <div class="card shadow-lg h-100">
+                        <img src="{{ asset('uploads/' ~ v.image) }}" class="card-img-top" alt="{{ v.nameEvent }}">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{ v.nameEvent }}</h5>
+                            <p class="card-text text-muted">{{ v.description|slice(0, 100) ~ '...' }}</p>
+
+                            <!-- Bouton "Voir Plus" avec une icône -->
+                            <!--button type="button" class="btn btn-outline-primary btn-sm"
+                                   -->
+                                <i class="bi bi-eye" data-bs-toggle="popover" title="{{ v.nameEvent }}"
+                                   data-bs-content="{{ v.description }}"></i>
+                            <!--/button-->
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Date :</strong> {{ v.dateEvent ? v.dateEvent|date('Y-m-d') : 'Non spécifiée' }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Date Fin:</strong> {{ v.dateEventF ? v.dateEventF|date('Y-m-d') : 'Non spécifiée' }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Adresse :</strong> {{ v.location }}
+                            </li>
+                        </ul>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <form action="{{ path('app_participer_create', { 'eventId': v.id }) }}" method="POST" class="m-0">
+                                <button type="submit" class="btn btn-success">Participer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        .card {
+            width: 100%;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            color:#4E9AEE !important;
+            font-weight: bold;
+        }
+        .btn-success {
+            background-color: #4E9AEE;
+            border-color: #4E9AEE;
+        }
+        .btn-success:hover {
+            background-color: #3A74B3;
+            border-color: #4E9AEE;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        .btn-info {
+            background-color: #4E9AEE;
+            border-color: #4E9AEE;
+            color: #fff;
+        }
+        .btn-info:hover {
+            background-color: #3A74B3;
+            border-color: #4E9AEE;
+        }
+
+        /* Style pour le bouton avec l'icône */
+        .btn-outline-primary {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+        .btn-outline-primary:hover {
+            color: #fff;
+            background-color: #4E9AEE;
+            border-color: #4E9AEE;
+        }
+        .bi-eye {
+            font-size: 1.2rem;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        });
+
+            document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search_name');
+            searchInput.addEventListener('input', function () {
+            // Lorsque l'utilisateur tape quelque chose, soumettre le formulaire
+            document.getElementById('searchForm').submit();
+        });
+        });
+
+    </script>
+
+{% endblock %}

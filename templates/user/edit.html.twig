@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Volontaire{% endblock %}
+
+{% block body %}
+    <h1>Modifier Volontaire</h1>
+        <div class="form-container">
+            {{ form_start(form, { 'attr': { 'id': 'edit-volontaire-form', 'action': path('app_volontaire_edit', {'id': volontaire.id}), 'method': 'POST' } }) }}
+
+
+            <!-- Common Fields -->
+                {{ form_row(form.email, { attr: { class: 'common-input' } }) }}
+                {{ form_row(form.name, {label: 'Prénom', attr: { class: 'common-input' } }) }}
+                {{ form_row(form.lastName, {label: 'Nom', attr: { class: 'common-input' } }) }}
+                {{ form_row(form.skills) }}
+                {{ form_row(form.availability, { label: 'Disponibilité' }) }}
+
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                {{ include('volontaire/_form.html.twig', {'button_label': 'Modifier'}) }}
+            </div>
+
+
+            {{ form_end(form) }}
+        </div>
+
+
+
+{% endblock %}
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+

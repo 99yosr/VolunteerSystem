@@ -1,0 +1,307 @@
+{% extends 'base.html.twig' %}
+{% block title %}À Propos{% endblock %}
+{% block body %}
+    <section id="about" class="about-section">
+        <!-- Banner Section -->
+        <div class="banner">
+            <h1>À Propos de <span>Unity Impact</span></h1>
+            <p>
+                Connecter les associations et les volontaires passionnés pour créer un changement social durable.
+            </p>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="content">
+            <div class="dynamic-text">
+                <h2>Notre Mission</h2>
+                <p>
+                    Renforcer les liens communautaires en facilitant les collaborations et en créant des opportunités uniques
+                    pour faire la différence.
+                </p>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="feature">
+                <i class="bi bi-building"></i>
+                <h3>Pour les Associations</h3>
+                <p>
+                    Publiez vos événements et formations pour attirer des volontaires et maximiser votre impact.
+                </p>
+            </div>
+            <div class="feature">
+                <i class="bi bi-person"></i>
+                <h3>Pour les Volontaires</h3>
+                <p>
+                    Explorez des opportunités enrichissantes et participez à des activités significatives pour les causes qui comptent.
+                </p>
+            </div>
+        </div>
+
+        <!-- New Section: About Us with Images -->
+        <div class="about-us">
+            <h2>Qui Sommes-Nous ?</h2>
+            <div class="about-grid">
+                <div class="about-item">
+                    <img src="{{ asset('img/vision.jpeg') }}" alt="Notre Vision">
+                    <h3>Notre Vision</h3>
+                    <p>
+                        Imaginer un monde où chaque individu peut contribuer activement aux causes sociales qui le passionnent.
+                    </p>
+                </div>
+                <div class="about-item">
+                    <img src="{{ asset('img/impact.jpeg') }}" alt="Notre Impact">
+                    <h3>Notre Impact</h3>
+                    <p>
+                        Des milliers d'associations et de volontaires connectés à travers notre plateforme pour un changement durable.
+                    </p>
+                </div>
+                <div class="about-item">
+                    <img src="{{ asset('img/ourteam.jpeg') }}" alt="Notre Équipe">
+                    <h3>Notre Équipe</h3>
+                    <p>
+                        Une équipe dynamique et dévouée travaillant sans relâche pour connecter les associations et les volontaires.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call-to-Action Section -->
+        <div class="cta-section">
+            <h2>Faites Partie du Changement</h2>
+            <p>
+                Découvrez les événements passionnants organisés par les associations et engagez-vous activement dans votre communauté.
+            </p>
+            <a href="/event" class="cta-btn">Inscrivez-vous Maintenant</a>
+        </div>
+    </section>
+
+    <style>
+        /* Section Styling */
+        .about-section {
+            padding: 0;
+            margin: 0;
+            color: #333;
+            background: #d5e5f4;
+            width: 100%;
+        }
+
+        /* Banner */
+        .banner {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+            background: #f3f9fd;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0056b3; /* Primary color */
+            margin-bottom: 20px;
+        }
+
+        .banner h1 span {
+            color: #0056b3;
+        }
+
+        .banner p {
+            font-size: 1.5rem;
+            color: #555; /* Updated to match the grey tone */
+        }
+
+        /* Content Section */
+        .content {
+            padding: 40px 20px;
+            max-width: 1200px; /* Restrict the content width for better readability */
+            margin: 0 auto; /* Center the content */
+        }
+
+        .dynamic-text h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+
+        .dynamic-text p {
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #555; /* Updated to match the grey tone */
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .feature {
+            background: #fdf9fa;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            width: 300px;
+            color: #333;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #0056b3;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 40px 20px;
+            background: #f3f9fd;
+            text-align: center;
+        }
+
+        .about-us h2 {
+            font-size: 2.5rem;
+            color: #0056b3;
+            margin-bottom: 30px;
+        }
+
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch; /* Ensures all items have equal height */
+        }
+
+        .about-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: filter 0.3s ease;
+        }
+
+        /*.about-item:hover img {
+            filter: brightness(0.8);
+        }*/
+
+        .about-item h3 {
+            font-size: 1.5rem;
+            color: #0056b3;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .about-item:hover h3 {
+            color: #004494;
+        }
+
+        .about-item p {
+            font-size: 1rem;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+
+        .about-item:hover p {
+            color: #333;
+        }
+
+        /* Call-to-Action Section */
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: #0056b3;
+            color: #fff;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #4E9AEE;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: #272D5B;
+            transform: scale(1.1);
+        }
+
+    </style>
+
+    <script>
+        // Add dynamic effects such as animated typing for mission statement
+        document.addEventListener('DOMContentLoaded', () => {
+            const mission = document.querySelector('.dynamic-text p');
+            const missionText = mission.textContent;
+            mission.textContent = '';
+            let i = 0;
+
+            function typeWriter() {
+                if (i < missionText.length) {
+                    mission.textContent += missionText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            typeWriter();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block title %}S'inscrire{% endblock %}
+{% block navbar %}
+{% endblock %}
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connéctés en tant que  {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se Déconnecter</a>
+        </div>
+    {% endif %}
+    <h1>S'inscrire</h1>
+    <div id="form-container">
+
+
+    {{ form_start(registrationForm) }}
+
+    <!-- Common Fields -->
+    <div id="common_fields">
+        {{ form_row(registrationForm.email, { attr: { class: 'common-input' } }) }}
+        {{ form_row(registrationForm.plainPassword, { label: 'Mot De Passe', attr: { class: 'common-input' } }) }}
+        {{ form_row(registrationForm.lastName, {label: 'Nom', attr: { class: 'common-input' } }) }}
+        {{ form_row(registrationForm.numTel, { label: 'N° de Téléphone' , attr: { class: 'common-input' }}) }}
+        {{ form_row(registrationForm.roles, { label: 'Rôle', attr: { class: 'common-select' } }) }}
+        {{ form_row(registrationForm.agreeTerms, { attr: { class: 'common-checkbox' } }) }}
+    </div>
+
+    <!-- Association Fields -->
+    <div id="association_fields" style="display: none;">
+        <h3>Association Details</h3>
+
+        {{ form_row(registrationForm.dateCreation, { label: 'Date De Création' }) }}
+        {{ form_row(registrationForm.description ,{ label: 'Description' }) }}
+        {{ form_row(registrationForm.image, { label: 'Logo/Image', attr : {class:'form-control', id:'inputGroupFile02'} }) }}
+        {{ form_row(registrationForm.local, { label: 'Addresse/Locale' }) }}
+        {{ form_row(registrationForm.ceo, { label: 'CEO Nom' }) }}
+    </div>
+
+    <!-- Volontaire Fields -->
+    <div id="volontaire_fields" style="display: none;">
+        <h3>Volontaire Details</h3>
+        {{ form_row(registrationForm.name, {label: 'Prénom'} ) }}
+        {{ form_row(registrationForm.skills, {label: 'Compétances'}) }}
+        {{ form_row(registrationForm.availability, { label: 'Disponibilité' }) }}
+    </div>
+
+    <!-- Submit Button -->
+        <div class="button-container" >
+            <button type="submit" class="btn btn-outline-primary btn-sm register">S'inscrire</button>
+        </div>
+
+    {{ form_end(registrationForm) }}
+    </div>
+    <!-- Role-Based Field Visibility Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const roleField = document.querySelector('[name="registration_form[roles]"]');
+            const associationFields = document.querySelectorAll('#association_fields input, #association_fields textarea');
+            const volontaireFields = document.querySelectorAll('#volontaire_fields input, #volontaire_fields textarea');
+
+            // Function to toggle fields and required attributes based on selected role
+            function toggleFields() {
+                const selectedRole = roleField.value;
+
+                if (selectedRole === 'ROLE_ASSOCIATION') {
+                    // Show association fields
+                    document.getElementById('association_fields').style.display = 'block';
+                    associationFields.forEach(field => field.required = true);
+
+                    // Hide volontaire fields
+                    document.getElementById('volontaire_fields').style.display = 'none';
+                    volontaireFields.forEach(field => field.required = false);
+                } else if (selectedRole === 'ROLE_VOLONTAIRE') {
+                    // Show volontaire fields
+                    document.getElementById('volontaire_fields').style.display = 'block';
+                    volontaireFields.forEach(field => field.required = true);
+
+                    // Hide association fields
+                    document.getElementById('association_fields').style.display = 'none';
+                    associationFields.forEach(field => field.required = false);
+                } else {
+                    // Hide all dynamic fields
+                    document.getElementById('association_fields').style.display = 'none';
+                    document.getElementById('volontaire_fields').style.display = 'none';
+                    associationFields.forEach(field => field.required = false);
+                    volontaireFields.forEach(field => field.required = false);
+                }
+            }
+
+            // Initialize field visibility on page load
+            toggleFields();
+
+            // Add event listener for changes in the role field
+            roleField.addEventListener('change', toggleFields);
+        });
+    </script>
+{% endblock %}

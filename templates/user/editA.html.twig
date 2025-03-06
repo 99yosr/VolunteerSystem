@@ -1,0 +1,52 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}Edit Association{% endblock %}
+
+{% block body %}
+    <style>
+        .titre-mod-A {
+            margin-top: 50px !important;
+            margin-left: 200px !important; /* Pour déplacer le titre vers le bas */
+            font-size: 1.5rem;
+            color: #272D5B; /* Bleu foncé */
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+
+    </style>
+    <h1 class="titre-mod-A">Modifier Association</h1>
+
+        <div class="form-container" style="margin-left: 500px !important;">
+            {{ form_start(form, { 'attr': { 'id': 'edit-association-form', 'action': path('app_association_edit', {'id': association.id}), 'method': 'POST' } }) }}
+
+
+            <!-- Common Fields -->
+
+                {{ form_row(form.email, { attr: { class: 'common-input' } }) }}
+                {{ form_row(form.lastName, {label: 'Nom', attr: { class: 'common-input' } }) }}
+                {{ form_row(form.dateCreation, { label: 'Date De Création' }) }}
+                {{ form_row(form.numTel, { label: 'N° de Téléphone' }) }}
+                {{ form_row(form.description ,{ label: 'Description' }) }}
+                {{ form_row(form.local, { label: 'Addresse/Locale' }) }}
+                {{ form_row(form.ceo, { label: 'CEO Nom' }) }}
+
+
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                {{ include('association/_form.html.twig', {'button_label': 'Modifier'}) }}
+            </div>
+
+
+            {{ form_end(form) }}
+        </div>
+
+
+
+{% endblock %}
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

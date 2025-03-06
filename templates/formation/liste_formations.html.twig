@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block title %}Les Formations{% endblock %}
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Les Formations</h1>
+        <form method="GET" action="{{ path('app_formation_index') }}" class="mb-4" id="searchForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="search_name" class="form-control" placeholder="Nom de la formation" id="search_name" value="{{ app.request.get('search_name') }}">
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            {% for v in formations %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ v.titre }}</h5>
+                        <p class="card-text">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> <strong>Date :</strong> {{ v.dateFormation ? v.dateFormation|date('Y-m-d') : 'Non définie' }}<br></li>
+                            <li class="list-group-item"> <strong>Date :</strong> {{ v.dateFormationFin ? v.dateFormationFin|date('Y-m-d') : 'Non définie' }}<br></li>
+
+                            <li class="list-group-item"><strong>Durée :</strong> {{ v.duree }} heures<br></li>
+                            <li class="list-group-item"><strong>Certification :</strong> {{ v.certification }}</li>
+                        </ul>
+                        </p>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <form action="{{ path('app_inscription_create', { 'formationId': v.id }) }}" method="POST" class="m-0">
+
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
+
+
+                            </form>
+                        </div>                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <style>
+.row{
+    padding-top: 40px;
+    gap: 30px;
+}
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .list-group-item {
+
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search_name');
+            searchInput.addEventListener('input', function () {
+                // Lorsque l'utilisateur tape quelque chose, soumettre le formulaire
+                document.getElementById('searchForm').submit();
+            });
+        });
+    </script>
+
+
+{% endblock %}

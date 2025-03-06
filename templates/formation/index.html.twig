@@ -1,0 +1,48 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}Formation index{% endblock %}
+
+{% block body %}
+    <h1 class="titre-pages">Liste Des Formations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Titre</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Duree</th>
+                <th>Certification</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in listeF %}
+            <tr>
+
+                <td>{{ formation.titre }}</td>
+                <td>{{ formation.dateFormation ? formation.dateFormation|date('Y-m-d') : '' }}</td>
+                <td>{{ formation.dateFormationFin ? formation.dateFormationFin|date('Y-m-d') : '' }}</td>
+
+                <td>{{ formation.duree }}</td>
+                <td>{{ formation.certification }}</td>
+                <td class="action-buttons">
+                    <a href="{{ path('app_formation_show', {'id': formation.id}) }}">Afficher</a>
+                    <a href="{{ path('app_formation_edit', {'id': formation.id}) }}">Modifier</a>
+                    <a href="{{ path('app_formation_list-inscri', {'id': formation.id}) }}">Les Inscrits</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucune formation trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="action-buttons">
+    <a  href="{{ path('app_formation_new') }}" style="margin-top: 100px; margin-left: 190px">Ajouter Une Nouvelle Formation</a>
+</div>
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

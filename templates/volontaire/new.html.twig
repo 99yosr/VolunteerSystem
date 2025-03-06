@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Volontaire{% endblock %}
+
+{% block body %}
+    <h1>Create new Volontaire</h1>
+
+    <div class="form-container">
+        {{ include('volontaire/_form.html.twig') }}
+    </div>
+
+    <a name="button-a" href="{{ path('app_volontaire_index') }}" class="btn-back">back to list</a>
+{% endblock %}

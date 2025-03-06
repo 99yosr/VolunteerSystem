@@ -1,0 +1,5 @@
+nucleos_dompdf:
+    defaults:
+        chroot: '%kernel.project_dir%/public' # See https://github.com/dompdf/dompdf/wiki/Usage#security-restrictions-for-local-files
+        isRemoteEnabled: true
+        logOutputFile: '%kernel.project_dir%/var/log/dompdf.log' # Prevent creating `/tmp/log.htm` which causes problems in some server configurations

@@ -1,0 +1,42 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}New Event{% endblock %}
+
+    {% block body %}
+        <style>
+            .titre-event {
+                margin-top: 200px !important;
+                margin-left: 200px !important; /* Pour déplacer le titre vers le bas */
+                font-size: 1.5rem;
+                color: #272D5B; /* Bleu foncé */
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f9f9f9;
+            }
+
+
+        </style>
+        <h2 class="titre-event">Créer Un Nouvel Evenement</h2>
+        <div class="form-container" style="margin-left: 500px;margin-top: 50px;">
+            {{ include('event/_form.html.twig') }}
+        </div>
+
+            <a href="{{ path('app_event_list') }}" style="text-decoration: none;position: relative; margin-right:470px;font-size: 1.2rem;">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+
+
+
+    {% endblock %}
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

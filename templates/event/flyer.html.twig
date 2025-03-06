@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ flyerData.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<style>
+    /*body {
+        background: url({{ flyerData.background }}) no-repeat center center;
+        background-size: cover; /* Assure que l'image couvre tout l'arrière-plan */
+        /*height: 100vh; /* Ajuste la hauteur pour remplir la fenêtre */
+       /* width: 100vw; /* Ajuste la largeur pour remplir la fenêtre */
+       /* margin: 0; /* Supprime les marges du body */
+    /*}*/
+    /* Réinitialisation globale */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+        background: url('{{ flyerData.background }}') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+    }
+    img{
+        width: 100px;
+        height: 100px;
+        margin-top: -78px;
+    }
+
+    .flyer {
+       /* background-color: rgba(255, 255, 255, 0.9);*/
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        padding: 40px 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+    }
+
+    /* Titre principal */
+    .flyer-title {
+        font-size: 6rem;
+        font-weight: 700;
+        margin-top: 70px;
+        margin-bottom: 10px;
+        line-height: 1;
+        text-align: center;
+    }
+
+    .flyer-subtitle {
+        font-size: 2rem;
+        color: #6e8f8b;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    /* Section des services */
+    .services {
+       /* background-color: #6e8f8b;*/
+        color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        /*margin: 20px 0;*/
+        margin-top: 180px;
+        margin-left: 390px;
+        /*max-width: 800px ;*/
+        width: 260px;
+        text-align: center;
+    }
+
+    .services h3 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        /*text-align: center;*/
+    }
+
+    .services p {
+        font-size: 1.5rem;
+        margin: 5px 0;
+        /*padding-left: 50px;*/
+        /*text-align: center;*/
+    }
+
+    /* Section About Us */
+    .about {
+        text-align: left;
+        margin-top: -300px;
+        width: 250px;
+        margin-left: 20px;
+
+    }
+
+    .about h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .about p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #555;
+    }
+</style>
+<body>
+
+<div class="flyer">
+
+    {#  <div class="flyer-content">
+        <div class="flyer-border"></div>
+        <div class="flyer-border1"></div>
+
+         <div class="flyer-text">
+
+
+            <h1 class="flyer-title">{{ flyerData.title }}</h1>
+            <p class="description">{{ flyerData.description }}</p>
+            <p class="date"><strong>Date :</strong> {{ flyerData.date }}</p>
+            <p class="location"><strong>Lieu :</strong> {{ flyerData.location }}</p>
+            <p class="contact"><strong>Contact :</strong> {{ flyerData.contact }}</p>
+        </div>
+    </div>#}
+
+    <!--h2 class="flyer-subtitle">WITH US</h2-->
+</div>
+<img src="{{ flyerData.image }}" alt="img">
+<!-- Titre principal -->
+<h1 class="flyer-title">{{ flyerData.title }}</h1>
+<!-- Section Services -->
+<div class="services">
+    <h3> INFO CLÉS <hr style="width: 80%; color:#E5E3E1; height: 5px;margin:20px auto; border: none;background-color:#E5E3E1; " > </h3>
+
+    <p><strong> Date :</strong> {{ flyerData.date }}</p>
+    <p><strong> Lieu : </strong>{{ flyerData.location }}</p>
+    <p><strong> Contact : </strong>{{ flyerData.contact }}</p>
+</div>
+<!-- Section About Us -->
+<div class="about">
+    <h3>Découvrez-nous <hr style="width: 90%; color:#6e8f8b; height: 5px;margin:20px auto; border: none;background-color:#6e8f8b; "> </h3>
+    <p>{{ flyerData.description }}</p>
+</div>
+</body>
+</html>

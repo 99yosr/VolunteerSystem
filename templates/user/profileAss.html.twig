@@ -1,0 +1,64 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}Profil - {{ user.name }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+        <h1 class="text-center" style="margin-left: 180px;margin-top: 50px;">Profil  {{ user.name }}</h1>
+
+        <div class="card mt-2 shadow-sm mx-auto" style="width: 65%;">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Informations personnelles</h5>
+                <p><strong>Nom :</strong> {{ user.lastName }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <!-- Association -->
+
+                    <p><strong>N° de Téléphone :</strong> {{ user.numTel }}</p>
+                    <p><strong>Description :</strong> {{ user.description }}</p>
+                    <p><strong>Adresse :</strong> {{ user.local }}</p>
+                    <p><strong>CEO Nom :</strong> {{ user.ceo }}</p>
+
+                <div class="action-buttons"> <a href="{{ path('app_association_edit', {'id': user.id}) }}">Modifier profil</a></div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <style>
+
+        .text-primary{
+            color: #4E9AEE !important;
+        }
+
+        /* Style des cartes */
+        .card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-left: 350px!important;
+            margin-top: 80px!important;
+        }
+        .card-body p{
+            text-align: left;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+
+        }
+
+        /* Boutons toujours en bas */
+        .card-body .d-flex {
+            margin-top: auto;
+        }
+
+
+    </style>
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'user/dashboard.html.twig' %}
+
+{% block title %}Détails De La Formation{% endblock %}
+
+{% block body %}
+    <style>
+        .titre-event {
+            margin-top: 30px !important;
+            margin-left: 200px !important; /* Pour déplacer le titre vers le bas */
+            font-size: 1.5rem;
+            color: #272D5B; /* Bleu foncé */
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <h2 class="titre-event">Détails De La Formation</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ formation.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ formation.titre }}</td>
+            </tr>
+            <tr>
+                <th>Date Début Formation</th>
+                <td>{{ formation.dateFormation ? formation.dateFormation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date Fin Formation</th>
+                <td>{{ formation.dateFormationFin ? formation.dateFormationFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Durée</th>
+                <td>{{ formation.duree }}</td>
+            </tr>
+            <tr>
+                <th>Certification</th>
+                <td>{{ formation.certification }}</td>
+            </tr>
+        </tbody>
+    </table>
+<div class="action-buttons" style="margin-top: 50px;" >
+    <a href="{{ path('app_formation_list') }}">Retourner à La Liste</a>
+
+    <a href="{{ path('app_formation_edit', {'id': formation.id}) }}">Modifier</a>
+</div>
+    {{ include('formation/_delete_form.html.twig') }}
+{% endblock %}
+{% block script %}{% endblock %}
+{% block script2 %}{% endblock %}

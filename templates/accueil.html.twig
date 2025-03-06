@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Accueil - Nos Associations</h1>
+
+    <div class="container">
+        <div class="row">
+            {% for association in associations %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm" style="height: 350px;">
+                        <img src="{{ asset('uploads/' ~ association.image) }}" class="card-img-top" alt="{{ association.name }}" style="height: 180px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary" style="color: #4E9AEE !important;">{{ association.name }}</h5>
+                            <p class="card-text text-muted  flex-grow-1 overflow-hidden">
+                                {{ association.description|slice(0, 300) ~ '...' }}
+                            </p>
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a href="{{ path('app_event_list_volon', { id: association.id }) }}" class="btn btn-outline-primary btn-sm">Événements</a>
+                                <a href="{{ path('app_form_list_volon', { id: association.id }) }}" class="btn btn-outline-secondary btn-sm">Formations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
